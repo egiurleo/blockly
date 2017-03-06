@@ -121,6 +121,9 @@ Blockly.Flyout = function(workspaceOptions) {
    * @private
    */
   this.startDragMouseX_ = 0;
+
+  this.svgList = [];
+  this.selectedBlock = -1;
 };
 
 /**
@@ -756,6 +759,10 @@ Blockly.Flyout.prototype.show = function(xmlList) {
   }
 
   this.setVisible(true);
+  
+  this.svgList = [];
+
+
   // Create the blocks to be shown in this flyout.
   var contents = [];
   var gaps = [];
@@ -766,6 +773,7 @@ Blockly.Flyout.prototype.show = function(xmlList) {
       var default_gap = this.horizontalLayout_ ? this.GAP_X : this.GAP_Y;
       if (tagName == 'BLOCK') {
         var curBlock = Blockly.Xml.domToBlock(xml, this.workspace_);
+        this.svgList.push(curBlock);
         if (curBlock.disabled) {
           // Record blocks that were initially disabled.
           // Do not enable these blocks as a result of capacity filtering.
